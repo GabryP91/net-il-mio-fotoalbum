@@ -12,7 +12,7 @@ using net_il_mio_fotoalbum.Context;
 namespace net_il_mio_fotoalbum.Migrations
 {
     [DbContext(typeof(PhotoContext))]
-    [Migration("20240527083349_InitialCreate")]
+    [Migration("20240527123734_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

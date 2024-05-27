@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using net_il_mio_fotoalbum.Context;
 
 namespace net_il_mio_fotoalbum.Models
@@ -15,7 +16,7 @@ namespace net_il_mio_fotoalbum.Models
 
         }
 
-        //funzione per una lista di poto con annesse categorie e user
+        //funzione per una lista di foto con annesse categorie e user
         public static List<Photo> GetAllPhotos(bool includeCategories = false)
         {
             SeedCat();
@@ -24,11 +25,46 @@ namespace net_il_mio_fotoalbum.Models
 
             using (PhotoContext db = new PhotoContext())
             {
-                if (includeCategories) return db.Photo.Include(c => c.User).Include(i => i.Categories).ToList();
+
+                //VECCHIO METODO
+                /*if (includeCategories) return db.Photo.Include(c => c.User).Include(i => i.Categories).ToList();
+
+                else return db.Photo.ToList();*/
+
+
+
+                if (includeCategories)
+                {
+
+                    // Include solo le categorie
+                    var photosWithCategories = db.Photo.Include(p => p.Categories).ToList();
+
+                    // Carica separatamente l'attributo UserName per ciascuna foto
+                    foreach (var photo in photosWithCategories)
+                    {
+                        var user = db.Users.FirstOrDefault(u => u.Id == photo.Userid);
+
+                        if (user != null)
+                        {
+                            //associo alla foto un nuovo oggetto IdentityUser con solo il campo mail
+                            photo.User = new IdentityUser { Email = user.Email };
+                        }
+                    }
+
+                    return photosWithCategories;
+                }
 
                 else return db.Photo.ToList();
             }
 
+        }
+
+        public static List<string> GetAllUserEmails()
+        {
+            using (PhotoContext db = new PhotoContext())
+            {
+                return db.Photo.Select(p => p.User.Email).Distinct().ToList();
+            }
         }
 
         //funzione popolamento tabella categoria foto
@@ -107,9 +143,9 @@ namespace net_il_mio_fotoalbum.Models
 
                    
 
-                    PhotoManager.InsertPhoto(new Photo("TourModiale", "Esperienza fantastica", "~/img/Viaggio1.jpg", true, "73cce54a-42fd-4b12-a15f-98c7d2dde274"), primaFoto);
-                    PhotoManager.InsertPhoto(new Photo("Matrimonio", "Bellissimo", "~/img/Matrimonio1.jpg", false, "73cce54a-42fd-4b12-a15f-98c7d2dde274"), secondaFoto);
-                    PhotoManager.InsertPhoto(new Photo("TourModiale2", "Esperienza fantastica2", "~/img/Viaggio2.jpg", true, "73cce54a-42fd-4b12-a15f-98c7d2dde274"), terzaFoto);
+                    PhotoManager.InsertPhoto(new Photo("TourModiale", "Esperienza fantastica", "~/img/Viaggio1.jpg", true, "2904687b-4d2b-49df-8483-a863c52277f4"), primaFoto);
+                    PhotoManager.InsertPhoto(new Photo("Matrimonio", "Bellissimo", "~/img/Matrimonio1.jpg", false, "2904687b-4d2b-49df-8483-a863c52277f4"), secondaFoto);
+                    PhotoManager.InsertPhoto(new Photo("TourModiale2", "Esperienza fantastica2", "~/img/Viaggio2.jpg", true, "2904687b-4d2b-49df-8483-a863c52277f4"), terzaFoto);
 
 
                     db.SaveChanges();

@@ -18,7 +18,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <a href="@Url.Action("Create", "Home")" class="btn btn-primary">Crea pizza</a>
+            <a href="@Url.Action("Create", "Home")" class="btn btn-primary">Contatta</a>
         </div>
     </div>
 </div>
@@ -57,16 +57,20 @@
                         //controllo se la foto e visionabile
 
                         if (photo.isVisible) {
+
+                            //variabile che stampa in pagina dinamicamente tutte le categorie
+                            let categoriesHtml = '';
+                            photo.categories.forEach(category => {
+                                categoriesHtml += category.nome + ', ';
+                            });
+
                             photoTable.innerHTML += `
                                             <div class="col">
-                                                            <img src="${photo.imagePath}" style="width: 150px;"/>
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                            <h5 class="card-title">${photo.titolo}</h5>
-                                                            <p class="card-text">${photo.descrizione}</p>
-                                                    </div>
-                                                        <div class="btn btn-danger" onclick="deleteById(${photo.id})">Elimina</div>
-                                                </div>
+                                               <img src="${photo.imagePath}" style="width: 250px;"/>
+                                                
+                                               <h5 class="card-title">${photo.titolo}</h5>
+                                               <p class="card-text">${photo.descrizione}</p>
+                                               <p class="card-text">${categoriesHtml}</p>
                                             </div>`;
                         }
                         

@@ -10,6 +10,7 @@ html {
 
 img {
     width: 100%;
+    height: 50%;
 }
 
 @media (min-width: 768px) {
@@ -30,6 +31,10 @@ body {
 h1 {
    display:block;
    text-align:center;
+}
+
+.col {
+    text-align:center;
 }
 
 input {

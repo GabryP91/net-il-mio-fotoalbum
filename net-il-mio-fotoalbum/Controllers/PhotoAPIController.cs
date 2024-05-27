@@ -12,7 +12,7 @@ namespace net_il_mio_fotoalbum.Controllers
         [HttpGet]
         public IActionResult GetAllPhotos()
         {
-            var Photos = PhotoManager.GetAllPhotos();
+            var Photos = PhotoManager.GetAllPhotos(true);
 
             return Ok(Photos);
         }
