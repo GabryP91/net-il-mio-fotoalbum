@@ -81,7 +81,9 @@ namespace net_il_mio_fotoalbum.Models
                         new Category {Nome = "Reportage"},
                         new Category {Nome = "Matrimonio"},
                         new Category {Nome = "Glamour"},
-                        new Category {Nome = "Viaggio"}
+                        new Category {Nome = "Viaggio"},
+                        new Category {Nome = "Nostalgia"},
+                        new Category {Nome = "Svago"}
 
                     };
 
@@ -114,7 +116,9 @@ namespace net_il_mio_fotoalbum.Models
                     var matrimonio = db.Category.FirstOrDefault(i => i.Nome == "Matrimonio")?.id.ToString();
                     var glamour = db.Category.FirstOrDefault(i => i.Nome == "Glamour")?.id.ToString();
                     var viaggio = db.Category.FirstOrDefault(i => i.Nome == "Viaggio")?.id.ToString();
-              
+                    var nostalgia = db.Category.FirstOrDefault(i => i.Nome == "Nostalgia")?.id.ToString();
+                    var svago = db.Category.FirstOrDefault(i => i.Nome == "Svago")?.id.ToString();
+
 
                     // Crea una lista di stringhe con gli ID delle categorie
 
@@ -140,13 +144,27 @@ namespace net_il_mio_fotoalbum.Models
                      stilllife,
                      glamour
                  };
+                    var quartaFoto = new List<String>
+                 {
+                     nostalgia,
+                     svago,
+                     glamour
+                 };
+                    var quintaFoto = new List<String>
+                 {
+                     nostalgia,
+                     svago,
+                     stilllife,
+                     glamour
+                 };
 
-                   
+
 
                     PhotoManager.InsertPhoto(new Photo("TourModiale", "Esperienza fantastica", "~/img/Viaggio1.jpg", true, "2904687b-4d2b-49df-8483-a863c52277f4"), primaFoto);
                     PhotoManager.InsertPhoto(new Photo("Matrimonio", "Bellissimo", "~/img/Matrimonio1.jpg", false, "2904687b-4d2b-49df-8483-a863c52277f4"), secondaFoto);
                     PhotoManager.InsertPhoto(new Photo("TourModiale2", "Esperienza fantastica2", "~/img/Viaggio2.jpg", true, "2904687b-4d2b-49df-8483-a863c52277f4"), terzaFoto);
-
+                    PhotoManager.InsertPhoto(new Photo("Unreal", "Esperienza Super", "~/img/Unreal.png", false, "2904687b-4d2b-49df-8483-a863c52277f4"), quartaFoto);
+                    PhotoManager.InsertPhoto(new Photo("Unreal Tournament", "Esperienza Super al QUADRATO", "~/img/Tournament2.jpg", false, "2904687b-4d2b-49df-8483-a863c52277f4"), quintaFoto);
 
                     db.SaveChanges();
 
