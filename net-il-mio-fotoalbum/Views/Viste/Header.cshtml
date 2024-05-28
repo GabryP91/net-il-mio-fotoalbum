@@ -1,6 +1,51 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+
+@{
     string activePage = ViewContext.RouteData.Values["action"]?.ToString();
     string activeController = ViewContext.RouteData.Values["controller"]?.ToString();
+
+    <!--Modificato per ottenere il ruolo e non il nome utente-->
+    var user = UserManager.GetUserAsync(User).Result;
+    var roles = user != null ? UserManager.GetRolesAsync(user).Result : new List<string>();
+    var role = roles.FirstOrDefault();
+
+
+
+    // Liste di immagini per ruoli diversi
+    var superadminImages = new List<string>
+    {
+        "img/SuperAdmin.png",
+        "img/SuperAdmin1.png",
+        "img/SuperAdmin2.png",
+        "img/SuperAdmin3.png"
+    };
+
+    var userImages = new List<string>
+    {
+        "img/Admin.png",
+        "img/Admin1.png",
+        "img/Admin2.png",
+        "img/Admin3.png"
+    };
+
+    var random = new Random();
+    string randomImage;
+
+    if (role == "SuperAdmin")
+    {
+        // Seleziona un'immagine casuale per l'admin
+        randomImage = superadminImages[random.Next(superadminImages.Count)];
+    }
+    else
+    {
+        // Seleziona un'immagine casuale per l'utente normale
+        randomImage = userImages[random.Next(userImages.Count)];
+    }
 }
 
 <header>
@@ -29,6 +74,11 @@
                 <partial name="_LoginPartial" />
               
           </ul>
+
+        <!--aggiunto per ottenere un'immagine diversa ogni volta che ci si logga-->
+        <div class="logo-container">
+            <img src="@randomImage" alt="Logo" />
+        </div>
     </nav>
 </header>
 
