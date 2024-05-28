@@ -1,22 +1,82 @@
 ﻿@model IEnumerable<Photo>
 
 @{
-    Layout = "_LayoutBack";
+    ViewData["Title"] = "Lista foto completa";
+    Layout = "_Layout";
 }
 
 <div class="text-center">
 
+    <h1>@ViewData["Title"]</h1>
 
-    
-    <div>
+    <table class="table table-success">
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Descrizione</th>
+                <th>Immagine</th>
+                <th>Creata</th>
+                <th>Modificata</th>
+
+                <th>Lista categorie</th>
+                <th>Modifica</th>
+                <th>Elimina</th>
+          
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (!Model.Any())
+            {
+                <p>Non ci sono foto disponibili.</p>
+            }
+            else
+            {
+                foreach (var photo in Model)
+                {
+                    <tr>
+                        <td><mark>@photo.Titolo</mark></td>
+                        <td><mark>@photo.Descrizione</mark></td>
+                        <td><img src="@Url.Content(photo.ImagePath)" alt="@photo.Titolo" style="max-width: 100px; max-height: 100px;" /></td>
+                        <td><mark><b>@photo.CreatedAt</b></mark></td>
+                        <td><mark><b>da aggiungere</b></mark></td>
+
+                        <!--Relazione molti a molti-->
+                        <td>
+                            <mark>
+                                @if (photo.Categories != null && photo.Categories.Any())
+                                {
+                                    foreach (var categoria in photo.Categories)
+                                    {
+                                        @categoria.Nome <br />
+                                    }
+                                }
+                                else
+                                {
+                                    <span>Nessun categoria presente</span>
+                                }
+                            </mark>
+                        </td>
+
+                        <!--Collegamento pagina details-->
+                        <td><mark><b><a href="@Url.Action("Details", "Photo", new { id = photo.id })">MODIFICA</a></b></mark></td>
+                        <!--Collegamento pagina update-->
+                        <td><mark><b><a href="@Url.Action("Update", "Photo", new { id = photo.id })">ELIMINA</a></b></mark></td>
+
+                        
+
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+   
         
+
+   <button class="btn btn-success"><b><a href="@Url.Action("Create", "Photo")">INSERISCI UNA NUOVA FOTO</a></b></button>
+   <button class="btn btn-warning"><b><a href="@Url.Action("Delete", "Photo")">ELIMINA TUTTE LE FOTO</a></b></button>
         
 
-            <button class="btn btn-success"><b><a href="@Url.Action("Create", "Photo")">INSERISCI UNA NUOVA FOTO</a></b></button>
-            <button class="btn btn-warning"><b><a href="@Url.Action("Delete", "Photo")">ELIMINA TUTTE LE FOTO</a></b></button>
-        
-
-
-    </div>
 
 </div>

@@ -16,7 +16,10 @@ namespace net_il_mio_fotoalbum.Models
         public string Descrizione { get; set; }
         public string? ImagePath { get; set; }
         public bool IsVisible { get; set; }
-        
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime ModifydAt { get; set; }
+
 
         //relazione tra la foto e le categorie.(many-to-many)
         public List<Category> Categories { get; set; }
@@ -26,7 +29,10 @@ namespace net_il_mio_fotoalbum.Models
         public IdentityUser User { get; set; } // Navigation property to the user
 
         //METODI
-        public Photo() { }
+        public Photo() {
+
+            CreatedAt = DateTime.Now;
+        }
 
         public Photo(string titolo, string descrizione, string foto, bool visibile, string id) : this()
         {

@@ -1,12 +1,31 @@
-﻿<header>
+﻿@{
+    string activePage = ViewContext.RouteData.Values["action"]?.ToString();
+    string activeController = ViewContext.RouteData.Values["controller"]?.ToString();
+}
+
+<header>
     <h1 class="Title">Il mio Fotoalbum</h1>
     <nav>
        
           <ul>
-               <li class="nav-item">
+               <li class="nav-item @(activeController == "Home" && activePage == "Index" ? "active" : "")">
                   <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                </li>
 
+                @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
+                {
+                <li class="nav-item @(activeController == "Photo" && activePage == "Index" ? "active" : "")">
+                    <a class="nav-link text-dark" asp-controller="Photo" asp-action="Index">Lista Foto</a>
+                </li>
+                 }
+
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <li class="nav-item @(activeController == "Category" && activePage == "Index" ? "active" : "")">
+                        <a class="nav-link text-dark" asp-controller="Category" asp-action="Index">Categorie</a>
+                    </li>
+                }
+            
                 <partial name="_LoginPartial" />
               
           </ul>
@@ -46,6 +65,10 @@
     nav ul li a {
          text-decoration: none;
          color: inherit;
+    }
+
+    .nav-item.active .nav-link {
+        font-weight: bold;
     }
 
 </style>
