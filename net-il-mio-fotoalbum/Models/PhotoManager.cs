@@ -16,6 +16,31 @@ namespace net_il_mio_fotoalbum.Models
 
         }
 
+        //funzione che restituisce una lista di foto che hanno lo stesso nome di quello passato
+        public static List<Photo> GetPhotoByTitle(string data)
+        {
+            using (PhotoContext db = new PhotoContext())
+            {
+
+                //restituiscimi una lista di foto che hanno lo stesso nome di quello che passo
+                List<Photo> photos = db.Photo.Where(p => p.Titolo.Contains(data) && p.IsVisible == true).Include(c => c.Categories).ToList();
+
+                // Carica separatamente l'attributo UserName per ciascuna foto
+                foreach (var photo in photos)
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Id == photo.Userid);
+
+                    if (user != null)
+                    {
+                        //associo alla foto un nuovo oggetto IdentityUser con solo il campo mail
+                        photo.User = new IdentityUser { Email = user.Email };
+                    }
+                }
+
+                return photos;
+            }
+
+        }
         //funzione per una lista di foto con annesse categorie e user
         public static List<Photo> GetAllPhotos(bool includeCategories = false)
         {

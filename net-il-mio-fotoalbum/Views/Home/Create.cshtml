@@ -68,7 +68,7 @@
         formData.append('Email', mail); // Aggiungi il campo Nome
         formData.append('Corpo', description); // Aggiungi il campo Descrizione
         formData.append('Adminid', Admin); // Aggiungi il campo Prezzo
-        formData.append('Admin', null); // Aggiungi il campo Prezzo
+      
         console.log(formData);
         axios.post('/api/PhotoAPI/CreateMessage', formData)
             .then(response => {

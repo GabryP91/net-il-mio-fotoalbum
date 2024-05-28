@@ -23,6 +23,8 @@
 
 <script>
 
+
+    let title = null;
     //popolamento
     function Popolate() {
         axios
@@ -31,18 +33,18 @@
 
                 if (res.data.length == 0) // Non abbiamo nessuna foto
                 {
-                    console.log(res.data);
+                    
                     document.querySelector('.js_no_photo').classList.remove('d-none');
                     document.querySelector('.js_photo_table').classList.add('d-none');
                 }
                 else {
-                    console.log(res.data);
+                    
                     document.querySelector('.js_no_photo').classList.add('d-none');
                     var photoTable = document.querySelector('.js_photo_table');
                     photoTable.classList.remove('d-none');
                     photoTable.innerHTML = '';
                     res.data.forEach((photo) => {
-                        console.log(photo);
+                        
 
                         // Se il tilde è presente, rimuovilo dalla stringa
                         if (photo.imagePath.includes("~")) {
@@ -62,6 +64,7 @@
 
                             const contactUrl = `@Url.Action("Create", "Home")?mail=${encodeURIComponent(photo.user.email)}&id=${encodeURIComponent(photo.userid)}`;
 
+                            title = photo.titolo;
 
                             photoTable.innerHTML += `
                                             <div class="col">
@@ -85,6 +88,84 @@
 
     Popolate()
 
+
+    //ricerca iterativa
+
+    function loadList(titleFilter) {
+
+        if (titleFilter == "") {
+
+            Popolate()
+        }
+        else {
+                axios.get(`api/PhotoAPI/GetPhotoByTitle/${titleFilter}`).then((res) => {
+
+                if (res.data.length == 0) // Non abbiamo nessuna foto
+                {
+                    console.log(res.data);
+                    document.querySelector('.js_no_photo').classList.remove('d-none');
+                    document.querySelector('.js_photo_table').classList.add('d-none');
+                }
+                else {
+                    console.log(res.data);
+                    document.querySelector('.js_no_photo').classList.add('d-none');
+                    var photoTable = document.querySelector('.js_photo_table');
+                    photoTable.classList.remove('d-none');
+                    photoTable.innerHTML = '';
+                    res.data.forEach((photo) => {
+                        console.log(photo);
+
+                        // Se il tilde è presente, rimuovilo dalla stringa
+                        if (photo.imagePath.includes("~")) {
+
+                            photo.imagePath = photo.imagePath.replace("~", "");
+                        }
+
+                        //controllo se la foto e visionabile
+                    
+                        if (photo.isVisible) {
+
+                            //variabile che stampa in pagina dinamicamente tutte le categorie
+                            let categoriesHtml = '';
+                            photo.categories.forEach(category => {
+                                categoriesHtml += category.nome + ', ';
+                            });
+
+                            const contactUrl = `@Url.Action("Create", "Home")?mail=${encodeURIComponent(photo.user.email)}&id=${encodeURIComponent(photo.userid)}`;
+
+
+                            photoTable.innerHTML += `
+                                                <div class="col">
+                                                   <img src="${photo.imagePath}" style="width: 250px;"/>
+
+                                                   <h5 class="card-title">${photo.titolo}</h5>
+                                                   <p class="card-text">${photo.descrizione}</p>
+                                                   <p class="card-text">${categoriesHtml}</p>
+                                                   <a href="${contactUrl}" class="btn btn-primary">Contatta</a>
+                                                </div>`;
+                        }
+
+                    });
+                }
+
+            })
+            .catch((error) => {
+                console.error("Errore durante la richiesta API:", error);
+            });
+        }
+
+        
+    }
+
+    document.querySelector('.js_search').addEventListener('input', function () {
+        loadList(this.value);
+    });
+
+    function search() {
+        var search = document.querySelector('.js_search').value;
+        console.log(search);
+        loadList(search);
+    }
 
    
 
