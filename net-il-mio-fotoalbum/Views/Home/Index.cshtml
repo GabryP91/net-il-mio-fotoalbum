@@ -16,11 +16,7 @@
     <div class="row row-cols-4 js_photo_table d-none">
         <!-- Qui inseriamo i post -->
     </div>
-    <div class="row">
-        <div class="col">
-            <a href="@Url.Action("Create", "Home")" class="btn btn-primary">Contatta</a>
-        </div>
-    </div>
+    
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -64,6 +60,9 @@
                                 categoriesHtml += category.nome + ', ';
                             });
 
+                            const contactUrl = `@Url.Action("Create", "Home")?mail=${encodeURIComponent(photo.user.email)}&id=${encodeURIComponent(photo.userid)}`;
+
+
                             photoTable.innerHTML += `
                                             <div class="col">
                                                <img src="${photo.imagePath}" style="width: 250px;"/>
@@ -71,6 +70,7 @@
                                                <h5 class="card-title">${photo.titolo}</h5>
                                                <p class="card-text">${photo.descrizione}</p>
                                                <p class="card-text">${categoriesHtml}</p>
+                                               <a href="${contactUrl}" class="btn btn-primary">Contatta</a>
                                             </div>`;
                         }
                         

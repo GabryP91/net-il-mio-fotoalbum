@@ -12,7 +12,7 @@ namespace net_il_mio_fotoalbum.Models
 
         //relazione tra il messaggio e l'amministratore di riferimento.(one-to-many)
         public string Adminid { get; set; } // Foreign key to the administrator
-        public IdentityUser Admin { get; set; } // Navigation property to the administrator
+        public IdentityUser? Admin { get; set; } // Navigation property to the administrator
 
 
         //METODI

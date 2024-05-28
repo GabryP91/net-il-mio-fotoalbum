@@ -26,7 +26,7 @@ namespace net_il_mio_fotoalbum.Models
 
         //relazione tra la foto e l'utente che l'ha creata.(one-to-many)
         public string Userid { get; set; } // Foreign key to the user who created the photo
-        public IdentityUser User { get; set; } // Navigation property to the user
+        public IdentityUser? User { get; set; } // Navigation property to the user
 
         //METODI
         public Photo() {

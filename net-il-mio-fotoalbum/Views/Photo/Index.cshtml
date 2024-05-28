@@ -17,6 +17,7 @@
                 <th>Immagine</th>
                 <th>Creata</th>
                 <th>Modificata</th>
+                <th>Pubblica</th>
 
                 <th>Lista categorie</th>
                 <th>Modifica</th>
@@ -40,6 +41,15 @@
                         <td><img src="@Url.Content(photo.ImagePath)" alt="@photo.Titolo" style="max-width: 100px; max-height: 100px;" /></td>
                         <td><mark><b>@photo.CreatedAt</b></mark></td>
                         <td><mark><b>da aggiungere</b></mark></td>
+
+                        @if (photo.IsVisible )
+                        {
+                            <td><mark><b>Si</b></mark></td>
+                        }
+                        else
+                        {
+                            <td><mark><b>No</b></mark></td> 
+                        }
 
                         <!--Relazione molti a molti-->
                         <td>

@@ -1,0 +1,85 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col"><h1>Invia un messaggio</h1></div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form onsubmit="Send(event)"  method="post">
+                <div class="mb-3">
+                    <strong>Mail di riferimento:</strong>
+                    <input id="MexEmail" type="email" class="d-block w-100" />
+                </div>
+                <div class="mb-3">
+                    <strong>Corpo:</strong>
+                    <textarea id="MexDescrizione" name="MexDescrizione" class="form-control" rows="4" cols="50"></textarea>
+                </div>
+                <div class="mb-3">
+                    <strong>Mail proprietario foto:</strong>
+                    <div class="mail_admin">
+                        <!-- Qui inseriamo le categorie -->
+                    </div>
+                </div>
+             
+                <div class="mb-3">
+                    <input type="submit" class="btn btn-success" value="Invia" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    const value = getQueryParam('mail');
+    const id = getQueryParam('id');
+
+    function Popolate() {
+
+        var mail = document.querySelector('.mail_admin');
+   
+
+        mail.innerHTML = ''; // Pulisci il contenuto esistente
+        mail.innerHTML += `<p>${value}</p>`;
+    }
+
+    // Popola quando la pagina è caricata
+    document.addEventListener('DOMContentLoaded', Popolate);
+
+
+    function Send(message) {
+
+
+        message.preventDefault();
+
+        var mail = document.getElementById('MexEmail').value;
+        var description = document.getElementById('MexDescrizione').value;
+        var Admin = id;
+        console.log(description);
+
+        const formData = new FormData(); // Crea un oggetto FormData
+        formData.append('Email', mail); // Aggiungi il campo Nome
+        formData.append('Corpo', description); // Aggiungi il campo Descrizione
+        formData.append('Adminid', Admin); // Aggiungi il campo Prezzo
+        formData.append('Admin', null); // Aggiungi il campo Prezzo
+        console.log(formData);
+        axios.post('/api/PhotoAPI/CreateMessage', formData)
+            .then(response => {
+                console.log(response.data);
+                alert('Messaggio inviato con successo!'); // Avviso in caso di successo
+            })
+            .catch(error => {
+                console.error("Errore nell'invio del messaggio:", error);
+            });
+    }
+
+    Popolate()
+
+</script>
