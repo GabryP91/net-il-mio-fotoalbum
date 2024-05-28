@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Photo>
+
+@{
+    ViewData["Title"] = "Lista Foto";
+    Layout = "_LayoutBack";
+}
+
+<div class="text-center">
+
+
+    <!--<audio controls loop autoplay id="audioPlayer" src="../audio/GigiDAgostino-GigisTime.mp3" type="audio/mpeg"></audio>
+    <script>
+        // Ottieni l'elemento audio
+        var audioPlayer = document.getElementById('audioPlayer');
+
+        // Imposta il volume al 50%
+        audioPlayer.volume = 0.1; // Imposta il volume a metà della sua capacità massima
+    </script>
+
+    <div>
+        <img src="~/img/Homer.png" class="Logo" alt="Logo" />
+        <h1>@ViewData["Title"]</h1>
+        
+
+        @if (User.IsInRole("ADMIN"))
+        {
+            <button class="btn btn-warning"><b><a href="@Url.Action("Popolate", "Pizza")">Inserimento automatico pizze</a></b></button>
+            <button class="btn btn-success"><b><a href="@Url.Action("Create", "Pizza")">INSERISCI UNA NUOVA PIZZA</a></b></button>
+            <button class="btn btn-warning"><b><a href="@Url.Action("Delete", "Pizza")">ELIMINA LISTA PIZZE</a></b></button>
+        }
+
+
+    </div>
+
+</div>
