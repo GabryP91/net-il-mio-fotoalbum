@@ -21,12 +21,25 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+    margin-bottom: 60px;
 }
 
+.table > tbody {
+    vertical-align: baseline;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+
 h1 {
-   display:block;
-   text-align:center;
+    display: block;
+    text-align: center;
+    color: #006400;
 }
 
 .col {
@@ -41,5 +54,72 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px; /* Altezza del contenitore, può essere modificata a seconda delle esigenze */
+}
+
+a {
+    text-decoration: none;
+    border: 2px solid white;
+    color: black;
+    border-radius: 30px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 30px 10px 30px;
+    margin: 10px 20px 10px 20px;
+}
+
+table tr{
+    padding: 100px;
+}
+
+mark {
+    background-color: transparent!important;
+    margin-top:10px;
+}
+
+a:hover {
+    color: green;
+}
+
+
+form {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background-color: #28a745;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #218838;
+    }
+
+.btn-danger {
+    margin-top: 10px;
+}
+
+    .btn-danger a {
+        color: white;
+        text-decoration: none;
+    }
+
+        .btn-danger a:hover {
+            text-decoration: underline;
+        }
+
+.text-warning {
+    font-size: 0.9em;
 }

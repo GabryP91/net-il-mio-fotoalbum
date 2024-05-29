@@ -1,0 +1,68 @@
+﻿@model PhotoFormModel
+
+@{
+    ViewData["Title"] = "Modifica foto";
+    Layout = "_Layout";
+}
+
+<div class="container text-center">
+
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h1>@ViewData["Title"]</h1>
+
+            <h4>Foto</h4>
+            <hr />
+
+            <form asp-controller="Photo" asp-action="Update" enctype="multipart/form-data" asp-route-id="@Model.Photo.id" method="post" style="background-color:forestgreen">
+
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <strong>Titolo:</strong>
+                    <input asp-for="Photo.Titolo" class="form-control" />
+                    <span asp-validation-for="Photo.Titolo" class="text-warning"></span>
+                </div>
+                <div class="form-group">
+                    <strong>Descrizione:</strong>
+                    <textarea asp-for="Photo.Descrizione" class="form-control"></textarea>
+                    <span asp-validation-for="Photo.Descrizione" class="text-warning"></span>
+                </div>
+                <div class="form-group">
+                    <strong>Foto:</strong>
+                    <input type="file" name="foto" asp-for="Photo.ImagePath" class="form-control" />
+                    <span asp-validation-for="Photo.ImagePath" class="text-warning"></span>
+                </div>
+
+                <input type="hidden" asp-for="Photo.Userid" />
+
+
+                <div class="mb-3">
+                    <strong>Lista categorie disponibili:</strong>
+
+                    @for (int i = 0; i < Model.Categories.Count; i++)
+                    {
+                        <div>
+                            <input type="checkbox" name="SelectedIngredients" value="@Model.Categories[i].Value"
+                            @(Model.SelectedCategories.Contains(Model.Categories[i].Value) ? "checked" : "") />
+                            @Model.Categories[i].Text
+                        </div>
+                    }
+
+                </div>
+
+
+                <div class="form-group" style="margin:10px 0px 0px 5px">
+                    <input type="submit" value="Modifica" class="btn btn-primary" />
+                </div>
+            </form>
+            <button class="btn btn-danger"><b><a href="@Url.Action("Index", "Photo")">Indietro</a></b></button>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    
+
+
+</style>

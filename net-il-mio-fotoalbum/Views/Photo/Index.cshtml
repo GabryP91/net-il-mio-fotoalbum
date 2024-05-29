@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Lista foto completa";
     Layout = "_Layout";
+    DateTime defaultDate = new DateTime(1, 1, 1, 0, 0, 0);
 }
 
 <div class="text-center">
@@ -40,7 +41,15 @@
                         <td><mark>@photo.Descrizione</mark></td>
                         <td><img src="@Url.Content(photo.ImagePath)" alt="@photo.Titolo" style="max-width: 100px; max-height: 100px;" /></td>
                         <td><mark><b>@photo.CreatedAt</b></mark></td>
-                        <td><mark><b>da aggiungere</b></mark></td>
+                       
+                        @if (photo.ModifydAt == defaultDate)
+                        {
+                            <td><mark><b>da aggiungere</b></mark></td>
+                        }
+                        else
+                        {
+                            <td><mark><b>@photo.ModifydAt</b></mark></td>
+                        }
 
                         @if (photo.IsVisible )
                         {
@@ -71,7 +80,7 @@
                         <!--Collegamento pagina details-->
                         <td><mark><b><a href="@Url.Action("Details", "Photo", new { id = photo.id })">MODIFICA</a></b></mark></td>
                         <!--Collegamento pagina update-->
-                        <td><mark><b><a href="@Url.Action("Update", "Photo", new { id = photo.id })">ELIMINA</a></b></mark></td>
+                        <td><mark><b><a href="@Url.Action("Delete", "Photo", new { id = photo.id })">ELIMINA</a></b></mark></td>
 
                         
 

@@ -34,12 +34,12 @@
 <script>
 
     function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
+        let urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
     }
 
-    const value = getQueryParam('mail');
-    const id = getQueryParam('id');
+    let value = getQueryParam('mail');
+    let id = getQueryParam('id');
 
     function Popolate() {
 

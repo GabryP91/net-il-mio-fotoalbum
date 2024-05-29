@@ -1,0 +1,95 @@
+﻿@model Photo
+
+@{
+    ViewData["Title"] = "Dettagli Foto";
+    Layout = "_Layout";
+    DateTime defaultDate = new DateTime(1, 1, 1, 0, 0, 0);
+}
+
+<div class="text-center">
+
+    <h1>@ViewData["Title"]</h1>
+
+    <div>
+
+        <table class="table table-success">
+            <thead>
+                <tr>
+                    <th>Titolo</th>
+                    <th>Descrizione</th>
+                    <th>Immagine</th>
+                    <th>Creata</th>
+                    <th>Modificata</th>
+                    <th>Pubblica</th>
+
+                    <th>Lista categorie</th>
+                    <th>Modifica</th>
+                    <th>Elimina</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    <tr>
+                        <td><mark>@Model.Titolo</mark></td>
+
+                        <td><mark><b>@Model.Descrizione</b></mark></td>
+
+                        <td><img src="@Url.Content(Model.ImagePath)" alt="@Model.Titolo" style="max-width: 150px; max-height: 150px;" /></td>
+
+                        <td><mark><b>@Model.CreatedAt</b></mark></td>
+
+                        @if (Model.ModifydAt == defaultDate)
+                        {
+                            <td><mark><b>da aggiungere</b></mark></td>
+                        }
+                        else
+                        {
+                            <td><mark><b>@Model.ModifydAt</b></mark></td>
+                        }
+
+                        @if (Model.IsVisible)
+                        {
+                            <td><mark><b>Si</b></mark></td>
+                        }
+                        else
+                        {
+                            <td><mark><b>No</b></mark></td>
+                        }
+
+                        <!--Relazione molti a molti-->
+                        <td>
+                            <mark>
+                                @if (Model.Categories != null && Model.Categories.Any())
+                                {
+                                    foreach (var categoria in Model.Categories)
+                                    {
+                                        @categoria.Nome <br />
+                                    }
+                                }
+                                else
+                                {
+                                    <span>Nessun categoria presente</span>
+                                }
+                            </mark>
+                        </td>
+
+                        <!--Collegamento pagina details-->
+                        <td><mark><b><a href="@Url.Action("Update", "Photo", new { id = Model.id })">MODIFICA</a></b></mark></td>
+                        <!--Collegamento pagina update-->
+                        <td><mark><b><a href="@Url.Action("Delete", "Photo", new { id = Model.id })">ELIMINA</a></b></mark></td>
+
+
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+
+        <button class="btn btn-danger"><b><a href="@Url.Action("Index", "Photo")">Indietro</a></b></button>
+
+
+    </div>
+
+</div>

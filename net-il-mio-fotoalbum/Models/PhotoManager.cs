@@ -39,8 +39,22 @@ namespace net_il_mio_fotoalbum.Models
 
                 return photos;
             }
-
         }
+
+        //funzione che restituisce un oggetto photo in base all'id che riceve
+        public static Photo GetPhotoById(int data)
+        {
+            using (PhotoContext db = new PhotoContext())
+            {
+
+                //restituiscimi un oggetto photo con stesso id e categorie associate
+                Photo photo = db.Photo.Where(p => p.id == data).Include(c => c.Categories).FirstOrDefault();
+
+                return photo;
+            }
+        }
+
+
         //funzione per una lista di foto con annesse categorie e user
         public static List<Photo> GetAllPhotos(bool includeCategories = false)
         {
@@ -84,11 +98,11 @@ namespace net_il_mio_fotoalbum.Models
 
         }
 
-        public static List<string> GetAllUserEmails()
+        public static List<Category> GetAllCategories()
         {
             using (PhotoContext db = new PhotoContext())
             {
-                return db.Photo.Select(p => p.User.Email).Distinct().ToList();
+                return db.Category.ToList();
             }
         }
 
@@ -185,9 +199,9 @@ namespace net_il_mio_fotoalbum.Models
 
 
 
-                    PhotoManager.InsertPhoto(new Photo("TourModiale", "Esperienza fantastica", "~/img/Viaggio1.jpg", true, "2904687b-4d2b-49df-8483-a863c52277f4"), primaFoto);
+                    PhotoManager.InsertPhoto(new Photo("TourMondiale", "Esperienza fantastica", "~/img/Viaggio1.jpg", true, "2904687b-4d2b-49df-8483-a863c52277f4"), primaFoto);
                     PhotoManager.InsertPhoto(new Photo("Matrimonio", "Bellissimo", "~/img/Matrimonio1.jpg", false, "2904687b-4d2b-49df-8483-a863c52277f4"), secondaFoto);
-                    PhotoManager.InsertPhoto(new Photo("TourModiale2", "Esperienza fantastica2", "~/img/Viaggio2.jpg", true, "2904687b-4d2b-49df-8483-a863c52277f4"), terzaFoto);
+                    PhotoManager.InsertPhoto(new Photo("TourMondiale2", "Esperienza fantastica2", "~/img/Viaggio2.jpg", true, "2904687b-4d2b-49df-8483-a863c52277f4"), terzaFoto);
                     PhotoManager.InsertPhoto(new Photo("Unreal", "Esperienza Super", "~/img/Unreal.png", false, "2904687b-4d2b-49df-8483-a863c52277f4"), quartaFoto);
                     PhotoManager.InsertPhoto(new Photo("Unreal Tournament", "Esperienza Super al QUADRATO", "~/img/Tournament2.jpg", false, "2904687b-4d2b-49df-8483-a863c52277f4"), quintaFoto);
 
@@ -220,6 +234,45 @@ namespace net_il_mio_fotoalbum.Models
                 db.SaveChanges();
             }
 
+        }
+
+        //aggiornamento effettivo foto
+        public static bool UpdatePhoto(int id, Photo photo, List<string> SelectedCategories)
+        {
+
+            using PhotoContext db = new PhotoContext();
+
+            //ricerca e restituisce la prima posizione con lo stesso id passato
+
+            var photoDaModificare = db.Photo.Where(p => p.id == id).Include(p => p.Categories).FirstOrDefault();
+
+            if (photoDaModificare == null)
+                return false;
+
+            photoDaModificare.Titolo = photo.Titolo;
+            photoDaModificare.Descrizione = photo.Descrizione;
+            photoDaModificare.ImagePath = photo.ImagePath;
+            photoDaModificare.Userid = photoDaModificare.Userid;
+            photoDaModificare.ModifydAt = DateTime.Now;
+
+            //verifico prima che sia stato effettivamente selezionato qualcosa
+            if (SelectedCategories != null)
+            {
+                // Poi svuoto così da salvare solo le informazioni che l'utente ha scelto, NON le aggiungiamo ai vecchi dati
+                photoDaModificare.Categories.Clear();
+
+                foreach (var category in SelectedCategories)
+                {
+                    int categoryId = int.Parse(category);
+                    var categoryFromDb = db.Category.FirstOrDefault(x => x.id == categoryId);
+                    if (categoryFromDb != null)
+                        photoDaModificare.Categories.Add(categoryFromDb);
+                }
+            }
+
+            db.SaveChanges();
+
+            return true;
         }
 
     }
