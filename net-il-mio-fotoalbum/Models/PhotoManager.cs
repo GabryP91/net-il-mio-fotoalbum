@@ -280,5 +280,22 @@ namespace net_il_mio_fotoalbum.Models
             return true;
         }
 
+        public static bool DeletePhoto(int id)
+        {
+            using PhotoContext db = new PhotoContext();
+
+
+            var photo = db.Photo.FirstOrDefault(p => p.id == id);
+
+            if (photo == null)
+                return false;
+
+            db.Photo.Remove(photo);
+
+            db.SaveChanges();
+
+            return true;
+        }
+
     }
 }

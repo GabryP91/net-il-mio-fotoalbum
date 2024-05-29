@@ -8,6 +8,8 @@ namespace net_il_mio_fotoalbum.Controllers
 
     public class PhotoController : Controller
     {
+
+        //acquisisco l'id dello user
         private readonly UserManager<IdentityUser> _userManager;
 
         public PhotoController(UserManager<IdentityUser> userManager)
@@ -42,8 +44,6 @@ namespace net_il_mio_fotoalbum.Controllers
             // Get the currently logged-in user's ID
             string userId = _userManager.GetUserId(User);
             model.Photo.Userid = userId;
-
-         
 
             model.CreateCategories(PhotoManager.GetAllCategories());
 
@@ -147,6 +147,16 @@ namespace net_il_mio_fotoalbum.Controllers
             else
                 return NotFound();
 
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+
+            if (PhotoManager.DeletePhoto(id))
+                return RedirectToAction("Index");
+            else
+                return NotFound();
         }
     }
 }
