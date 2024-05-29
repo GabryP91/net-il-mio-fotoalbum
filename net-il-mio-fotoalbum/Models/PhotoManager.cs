@@ -201,9 +201,9 @@ namespace net_il_mio_fotoalbum.Models
 
                     PhotoManager.InsertPhoto(new Photo("TourMondiale", "Esperienza fantastica", "~/img/Viaggio1.jpg", true, "2904687b-4d2b-49df-8483-a863c52277f4"), primaFoto);
                     PhotoManager.InsertPhoto(new Photo("Matrimonio", "Bellissimo", "~/img/Matrimonio1.jpg", false, "2904687b-4d2b-49df-8483-a863c52277f4"), secondaFoto);
-                    PhotoManager.InsertPhoto(new Photo("TourMondiale2", "Esperienza fantastica2", "~/img/Viaggio2.jpg", true, "2904687b-4d2b-49df-8483-a863c52277f4"), terzaFoto);
+                    PhotoManager.InsertPhoto(new Photo("TourMondiale2", "Esperienza fantastica2", "~/img/Viaggio2.jpg", true, "a76b942d-e529-4d42-a1b1-810cab1769da"), terzaFoto);
                     PhotoManager.InsertPhoto(new Photo("Unreal", "Esperienza Super", "~/img/Unreal.png", false, "2904687b-4d2b-49df-8483-a863c52277f4"), quartaFoto);
-                    PhotoManager.InsertPhoto(new Photo("Unreal Tournament", "Esperienza Super al QUADRATO", "~/img/Tournament2.jpg", false, "2904687b-4d2b-49df-8483-a863c52277f4"), quintaFoto);
+                    PhotoManager.InsertPhoto(new Photo("Unreal Tournament", "Esperienza Super al QUADRATO", "~/img/Tournament2.jpg", false, "a76b942d-e529-4d42-a1b1-810cab1769da"), quintaFoto);
 
                     db.SaveChanges();
 
