@@ -221,6 +221,8 @@ namespace net_il_mio_fotoalbum.Models
                 {
                     photo.Categories = new List<Category>();
 
+                    
+
                     // Trasformiamo gli ID scelti in Ingredient da aggiungere tra i riferimenti in Pizza
                     foreach (var CategoriesId in SelectedCategories)
                     {
@@ -228,7 +230,9 @@ namespace net_il_mio_fotoalbum.Models
                         var category = db.Category.FirstOrDefault(t => t.id == id); // PostManager.GetTagById(id); NON usiamo GetTagById() perché usa un db context diverso e ciò causerebbe errore in fase di salvataggio - usiamo lo stesso context all'interno della stessa operazione
                         photo.Categories.Add(category);
                     }
+
                 }
+               
 
                 db.Photo.Add(photo);
                 db.SaveChanges();

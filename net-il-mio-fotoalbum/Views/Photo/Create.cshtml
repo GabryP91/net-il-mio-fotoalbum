@@ -1,7 +1,7 @@
 ﻿@model PhotoFormModel
 
 @{
-    ViewData["Title"] = "Modifica foto";
+    ViewData["Title"] = "Crea nuovo foto";
     Layout = "_Layout";
 }
 
@@ -14,7 +14,7 @@
             <h4>Foto</h4>
             <hr />
 
-            <form asp-controller="Photo" asp-action="Update" enctype="multipart/form-data" asp-route-id="@Model.Photo.id" method="post" style="background-color:forestgreen">
+            <form asp-controller="Photo" asp-action="Create" enctype="multipart/form-data" asp-route-id="@Model.Photo.id" method="post" style="background-color:forestgreen">
 
                 @Html.AntiForgeryToken()
                 <div class="form-group">

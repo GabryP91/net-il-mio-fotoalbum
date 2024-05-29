@@ -1,11 +1,20 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using net_il_mio_fotoalbum.Models;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
+
     public class PhotoController : Controller
     {
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public PhotoController(UserManager<IdentityUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
         public IActionResult Index()
         {
             return View(PhotoManager.GetAllPhotos(true));
@@ -25,6 +34,61 @@ namespace net_il_mio_fotoalbum.Controllers
         }
 
         [HttpGet]
+        public IActionResult Create()
+        {
+            PhotoFormModel model = new PhotoFormModel();
+            model.Photo = new Photo();
+
+            // Get the currently logged-in user's ID
+            string userId = _userManager.GetUserId(User);
+            model.Photo.Userid = userId;
+
+         
+
+            model.CreateCategories(PhotoManager.GetAllCategories());
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Create(PhotoFormModel data, IFormFile foto)
+        {
+
+            if (!ModelState.IsValid)
+            {
+
+                // Ottenere la lista degli errori di validazione
+                var errorMessages = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                // Verifica se ci sono errori o se la foto non è presente
+                if (errorMessages.Count > 1 || foto == null || foto.Length == 0)
+                {
+
+                    data.CreateCategories(PhotoManager.GetAllCategories());
+
+                    return View("Create", data);
+                }
+
+            }
+
+            string imgFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img");
+            string imgFileName = Guid.NewGuid().ToString() + Path.GetExtension(foto.FileName);
+            string imgPath = Path.Combine(imgFolderPath, imgFileName);
+
+            using (var stream = new FileStream(imgPath, FileMode.Create))
+            {
+                await foto.CopyToAsync(stream);
+            }
+          
+            data.Photo.ImagePath = "~/img/" + imgFileName;
+
+            PhotoManager.InsertPhoto(data.Photo, data.SelectedCategories);
+
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
         public IActionResult Update(int id)
         {
             // Prendo il post AGGIORNATO da database, non
@@ -40,7 +104,7 @@ namespace net_il_mio_fotoalbum.Controllers
             {
                 PhotoFormModel model = new PhotoFormModel(photoToEdit);
 
-                model.CreateCategories();
+                model.CreateCategories(PhotoManager.GetAllCategories());
 
                 return View(model);
             }
@@ -60,9 +124,8 @@ namespace net_il_mio_fotoalbum.Controllers
 
                 if (errorMessages.Count != 1 || foto == null || foto.Length == 0)
                 {
-                    //data.Categories = PhotoManager.GetAllCategories();
-
-                    data.CreateCategories();
+                  
+                    data.CreateCategories(PhotoManager.GetAllCategories());
 
                     return View("Update", data);
                 }
