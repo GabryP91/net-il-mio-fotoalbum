@@ -33,6 +33,22 @@
                     <span asp-validation-for="Photo.ImagePath" class="text-warning"></span>
                 </div>
 
+                <div class="mb-3">
+                    <strong>Vuoi renderla visibile a tutti?:</strong>
+                    <select asp-for="Photo.IsVisible" rows="10" class="d-block w-100">
+
+                        <option value="" disabled>Scegli</option>
+
+                         <option value="True">Si</option>
+                        
+                         <option value="False">No</option>
+                        
+                        
+                    </select>
+                  
+                </div>
+
+                <!--- valore Userid nascosto --->
                 <input type="hidden" asp-for="Photo.Userid" />
 
 

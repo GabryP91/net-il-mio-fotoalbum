@@ -252,7 +252,8 @@ namespace net_il_mio_fotoalbum.Models
             photoDaModificare.Titolo = photo.Titolo;
             photoDaModificare.Descrizione = photo.Descrizione;
             photoDaModificare.ImagePath = photo.ImagePath;
-            photoDaModificare.Userid = photoDaModificare.Userid;
+            photoDaModificare.Userid = photo.Userid;
+            photoDaModificare.IsVisible = photo.IsVisible;
             photoDaModificare.ModifydAt = DateTime.Now;
 
             //verifico prima che sia stato effettivamente selezionato qualcosa
