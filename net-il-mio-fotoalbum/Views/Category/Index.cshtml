@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Category>
 @{
     ViewData["Title"] = "Pagina non Ancora pronta";
     Layout = "_Layout";
@@ -7,7 +7,51 @@
 
 <div class="text-center">
 
-    <h1>@ViewData["Title"]</h1>
+    <div class="text-center">
 
+        <h1>@ViewData["Title"]</h1>
+
+        <table class="table table-success">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+          
+                    <th>Modifica</th>
+                    <th>Elimina</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @if (!Model.Any())
+                {
+                    <p>Non ci sono foto disponibili.</p>
+                }
+                else
+                {
+                    foreach (var category in Model)
+                    {
+                        <tr>
+                            <td><mark>@category.Nome</mark></td>
+                           
+
+                            <!--Collegamento pagina details-->
+                            <td><mark><b><a href="@Url.Action("Details", "Photo", new { id = category.id })">MODIFICA</a></b></mark></td>
+                            <!--Collegamento pagina update-->
+                            <td><mark><b><a href="@Url.Action("Delete", "Photo", new { id = category.id })">ELIMINA</a></b></mark></td>
+
+
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+
+
+
+        <button class="btn btn-success"><b><a href="@Url.Action("Create", "Photo")">INSERISCI UNA NUOVA CATEGORIA</a></b></button>
+        <button class="btn btn-warning"><b><a href="@Url.Action("Delete", "Photo")">ELIMINA TUTTE LE CATEGORIE</a></b></button>
 
 </div>

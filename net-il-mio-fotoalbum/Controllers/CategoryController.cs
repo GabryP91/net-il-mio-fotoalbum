@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using net_il_mio_fotoalbum.Models;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
@@ -6,7 +7,7 @@ namespace net_il_mio_fotoalbum.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View(PhotoManager.GetAllCategories());
         }
     }
 }
