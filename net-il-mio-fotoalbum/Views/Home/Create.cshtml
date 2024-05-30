@@ -38,16 +38,29 @@
         return urlParams.get(param);
     }
 
-    let value = getQueryParam('mail');
+    
     let id = getQueryParam('id');
 
     function Popolate() {
 
-        var mail = document.querySelector('.mail_admin');
-   
+        axios
+            .get(`../api/PhotoAPI/GetUserMail/${id}`)
+            .then((res) => {
 
-        mail.innerHTML = ''; // Pulisci il contenuto esistente
-        mail.innerHTML += `<p>${value}</p>`;
+                    console.log(res.data);
+
+                    const mail = document.querySelector('.mail_admin');
+
+                    let value = res.data;
+
+                    mail.innerHTML = ''; // Pulisci il contenuto esistente
+                    mail.innerHTML += `<p>${value}</p>`;
+             
+            })
+            .catch((error) => {
+                console.error("Errore durante la richiesta API:", error);
+            });
+
     }
 
     // Popola quando la pagina è caricata

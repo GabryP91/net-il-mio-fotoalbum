@@ -54,6 +54,18 @@ namespace net_il_mio_fotoalbum.Models
             }
         }
 
+        //funzione che restituisce la mail dello user in base all'id passato
+        public static string GetUserMailById(string id)
+        {
+            using (PhotoContext db = new PhotoContext())
+            {
+                //restituiscimi la mail dello user richiesto
+                string mailUser = db.Users.Where(p => p.Id == id).Select(p => p.Email).FirstOrDefault();
+     
+                return mailUser;
+            }
+        }
+
 
         //funzione per una lista di foto con annesse categorie e user
         public static List<Photo> GetAllPhotos(bool includeCategories = false)
@@ -79,7 +91,7 @@ namespace net_il_mio_fotoalbum.Models
                     var photosWithCategories = db.Photo.Include(p => p.Categories).ToList();
 
                     // Carica separatamente l'attributo UserName per ciascuna foto
-                    foreach (var photo in photosWithCategories)
+                    /*foreach (var photo in photosWithCategories)
                     {
                         var user = db.Users.FirstOrDefault(u => u.Id == photo.Userid);
 
@@ -88,7 +100,7 @@ namespace net_il_mio_fotoalbum.Models
                             //associo alla foto un nuovo oggetto IdentityUser con solo il campo mail
                             photo.User = new IdentityUser { Email = user.Email };
                         }
-                    }
+                    }*/
 
                     return photosWithCategories;
                 }

@@ -44,7 +44,7 @@
                     photoTable.classList.remove('d-none');
                     photoTable.innerHTML = '';
                     res.data.forEach((photo) => {
-                        
+                        console.log(photo);
 
                         // Se il tilde è presente, rimuovilo dalla stringa
                         if (photo.imagePath.includes("~")) {
@@ -62,7 +62,7 @@
                                 categoriesHtml += category.nome + ', ';
                             });
 
-                            const contactUrl = `@Url.Action("Create", "Home")?mail=${encodeURIComponent(photo.user.email)}&id=${encodeURIComponent(photo.userid)}`;
+                            const contactUrl = `@Url.Action("Create", "Home")?id=${encodeURIComponent(photo.userid)}`;
 
                             title = photo.titolo;
 

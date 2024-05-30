@@ -16,7 +16,16 @@ namespace net_il_mio_fotoalbum.Controllers
 
             return Ok(Photos);
         }
-        
+
+        [HttpGet("{id}")]
+        public IActionResult GetUserMail(string id) // esempio--https://localhost:7077/api/PhotoAPIController/GetUserMail?id=1
+        {
+            string mail = PhotoManager.GetUserMailById(id);
+            if (mail == null)
+                return NotFound("ERRORE");
+            return Ok(mail);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> CreateMessage([FromForm] Message message)
