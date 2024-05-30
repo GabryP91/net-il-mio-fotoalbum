@@ -58,6 +58,12 @@ input {
 
 a {
     text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+table a {
     border: 2px solid white;
     color: black;
     border-radius: 30px;
