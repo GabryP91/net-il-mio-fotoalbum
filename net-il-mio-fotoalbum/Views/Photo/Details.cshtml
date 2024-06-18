@@ -35,7 +35,15 @@
 
                         <td><mark><b>@Model.Descrizione</b></mark></td>
 
-                        <td><img src="@Url.Content(Model.ImagePath)" alt="@Model.Titolo" style="max-width: 150px; max-height: 150px;" /></td>
+                        @if (Model.ImagePath == "")
+                        {
+                            <td><mark>Nessuna immagine</mark></td>
+                        }
+
+                        else
+                        {
+                            <td><img src="@Url.Content(Model.ImagePath)" alt="@Model.Titolo" style="max-width: 100px; max-height: 100px;" /></td>
+                        }
 
                         <td><mark><b>@Model.CreatedAt</b></mark></td>
 

@@ -56,6 +56,7 @@
 
                         if (photo.isVisible) {
 
+
                             //variabile che stampa in pagina dinamicamente tutte le categorie
                             let categoriesHtml = '';
                             photo.categories.forEach(category => {
@@ -65,16 +66,34 @@
                             const contactUrl = `@Url.Action("Create", "Home")?id=${encodeURIComponent(photo.userid)}`;
 
                             title = photo.titolo;
+                            console.log(photo.imagePath);
+                            //controllo che l'immagine sia stata caricata
+                            if (photo.imagePath != "") {
 
-                            photoTable.innerHTML += `
-                                            <div class="col">
-                                               <img src="${photo.imagePath}" style="width: 250px;"/>
-                                                
-                                               <h5 class="card-title">${photo.titolo}</h5>
-                                               <p class="card-text">${photo.descrizione}</p>
-                                               <p class="card-text">${categoriesHtml}</p>
-                                               <a href="${contactUrl}" class="btn btn-primary">Contatta</a>
-                                            </div>`;
+                                photoTable.innerHTML += `
+                                                <div class="col">
+                                                   <img src="${photo.imagePath}" style="width: 250px;"/>
+
+                                                   <h5 class="card-title">${photo.titolo}</h5>
+                                                   <p class="card-text">${photo.descrizione}</p>
+                                                   <p class="card-text">${categoriesHtml}</p>
+                                                   <a href="${contactUrl}" class="btn btn-primary">Contatta</a>
+                                                </div>`;
+                            }
+
+                            else {
+                                photoTable.innerHTML += `
+                                                    <div class="col">
+
+                                                       <h5 class="card-title">Nessuna immagine presente</h5><br>
+                                                       <h5 class="card-title">${photo.titolo}</h5>
+                                                       <p class="card-text">${photo.descrizione}</p>
+                                                       <p class="card-text">${categoriesHtml}</p>
+                                                       <a href="${contactUrl}" class="btn btn-primary">Contatta</a>
+                                                    </div>`;
+                            }
+
+                           
                         }
                         
                     });

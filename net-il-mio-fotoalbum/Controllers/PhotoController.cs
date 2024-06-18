@@ -119,10 +119,14 @@ namespace net_il_mio_fotoalbum.Controllers
 
                 // ottengo la lista degli errori
                 var errorMessages = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+ 
+                bool hasTitleError = errorMessages.Any(e => e.Contains("Il titolo è obbligatorio"));
+
+                bool hasDescriptionError = errorMessages.Any(e => e.Contains("La descrizione è obbligatoria"));
 
                 // Verifica se uno degli errori riguarda il campo "foto"
 
-                if (errorMessages.Count != 1 || foto == null || foto.Length == 0)
+                if (hasTitleError || hasDescriptionError)
                 {
                   
                     data.CreateCategories(PhotoManager.GetAllCategories());
@@ -131,13 +135,25 @@ namespace net_il_mio_fotoalbum.Controllers
                 }
             }
 
-            // Ottieni il nome del file immagine caricato dall'utente
-            string imgFileName = Path.GetFileName(foto.FileName);
+            string imgFileName;
 
-            string imgFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img");
-            string imgPath = Path.Combine(imgFolderPath, imgFileName);
+            if (foto == null)
+            {
+                // se l'immagine non è stata caricata inserisci una stringa vuota
+                
+                data.Photo.ImagePath = "";
+            }
 
-            data.Photo.ImagePath = "~/img/" + imgFileName;
+            else
+            {
+                // Ottieni il nome del file immagine caricato dall'utente
+                imgFileName = Path.GetFileName(foto.FileName);
+                data.Photo.ImagePath = "~/img/" + imgFileName;
+            }
+
+
+
+            
 
             // richiamo funzione di modifica
             bool result = PhotoManager.UpdatePhoto(id, data.Photo, data.SelectedCategories);

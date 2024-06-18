@@ -30,7 +30,6 @@
                 <div class="form-group">
                     <strong>Foto:</strong>
                     <input type="file" name="foto" asp-for="Photo.ImagePath" class="form-control" />
-                    <span asp-validation-for="Photo.ImagePath" class="text-warning"></span>
                 </div>
 
                 <div class="mb-3">
@@ -51,7 +50,7 @@
                 <!--- valore Userid nascosto --->
                 <input type="hidden" asp-for="Photo.Userid" />
 
-
+                
                 <div class="mb-3">
                     <strong>Lista categorie disponibili:</strong>
 

@@ -39,7 +39,18 @@
                     <tr>
                         <td><mark>@photo.Titolo</mark></td>
                         <td><mark>@photo.Descrizione</mark></td>
-                        <td><img src="@Url.Content(photo.ImagePath)" alt="@photo.Titolo" style="max-width: 100px; max-height: 100px;" /></td>
+
+                        @if (photo.ImagePath == "")
+                        {
+                            <td><mark>Nessuna immagine</mark></td>
+                        }
+
+                        else
+                        {
+                            <td><img src="@Url.Content(photo.ImagePath)" alt="@photo.Titolo" style="max-width: 100px; max-height: 100px;" /></td>
+                        }
+
+
                         <td><mark><b>@photo.CreatedAt</b></mark></td>
                        
                         @if (photo.ModifydAt == defaultDate)

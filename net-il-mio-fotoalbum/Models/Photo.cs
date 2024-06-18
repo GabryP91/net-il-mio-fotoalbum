@@ -22,7 +22,6 @@ namespace net_il_mio_fotoalbum.Models
 
 
         //relazione tra la foto e le categorie.(many-to-many)
-        [Required(ErrorMessage = "Selezionare almeno una categoria")]
         public List<Category> Categories { get; set; }
 
         //relazione tra la foto e l'utente che l'ha creata.(one-to-many)

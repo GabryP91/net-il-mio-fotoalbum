@@ -287,6 +287,11 @@ namespace net_il_mio_fotoalbum.Models
                 }
             }
 
+            else
+            {
+                photoDaModificare.Categories = null;
+            }
+
             db.SaveChanges();
 
             return true;
