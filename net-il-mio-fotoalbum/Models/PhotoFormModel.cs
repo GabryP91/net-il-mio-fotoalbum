@@ -41,7 +41,6 @@ namespace net_il_mio_fotoalbum.Models
             {
                 bool isSelected = this.SelectedCategories.Contains(Categoria.id.ToString());
 
-
                 this.Categories.Add(new SelectListItem() // lista delle categorie selezionabili
                 {
                     Text = $"{Categoria.Nome}",  // Nome categoria visualizzato 

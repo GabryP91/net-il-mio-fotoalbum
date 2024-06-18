@@ -58,7 +58,7 @@
                     @for (int i = 0; i < Model.Categories.Count; i++)
                     {
                         <div>
-                            <input type="checkbox" name="SelectedIngredients" value="@Model.Categories[i].Value"
+                            <input type="checkbox" name="SelectedCategories" value="@Model.Categories[i].Value"
                             @(Model.SelectedCategories.Contains(Model.Categories[i].Value) ? "checked" : "") />
                             @Model.Categories[i].Text
                         </div>
